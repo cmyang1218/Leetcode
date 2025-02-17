@@ -23,6 +23,8 @@ public:
                 curr = curr->next;
             }
         }
-        return dHead->next;
+        head = dHead->next;
+        delete dHead;
+        return head;
     }
 };
