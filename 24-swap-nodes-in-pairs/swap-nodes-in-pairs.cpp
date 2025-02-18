@@ -23,8 +23,8 @@ public:
 
             curr = curr->next->next;
         }
-        ListNode* res = dHead->next;
+        head = dHead->next;
         delete dHead;
-        return res;
+        return head;
     }
 };
