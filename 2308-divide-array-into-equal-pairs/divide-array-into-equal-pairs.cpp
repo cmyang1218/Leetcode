@@ -7,7 +7,7 @@ public:
         }
         bool ret = true;
         for (auto n : numMap) {
-            if (n.second % 2 != 0) {
+            if (n.second & 1) {
                 ret = false;
                 break;
             }
