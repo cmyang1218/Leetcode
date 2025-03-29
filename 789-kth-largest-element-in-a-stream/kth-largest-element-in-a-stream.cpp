@@ -9,14 +9,11 @@ public:
     }
 
     int add(int val) {
-        if (this->nums.size() > 0) {
-            int idx = findIndex(val);
-            this->nums.insert(this->nums.begin() + idx, val);
-            return this->nums[this->nums.size() - this->k];
-        }else {
-            this->nums.push_back(val);
-            return this->nums[0];
-        }
+
+        int idx = findIndex(val);
+        this->nums.insert(this->nums.begin() + idx, val);
+        return this->nums[this->nums.size() - this->k];
+       
     }
 
 private: 
