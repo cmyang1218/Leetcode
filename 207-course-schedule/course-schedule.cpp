@@ -3,32 +3,34 @@ public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         unordered_map<int, int> inDegrees;
         vector<vector<int>> graph(numCourses);
-        vector<int> sortedOrder;
         for (int i = 0; i < numCourses; i++) {
             inDegrees[i] = 0;
         }
-        for (int i = 0; i < prerequisites.size(); i++) {
-            int src = prerequisites[i][1], dst = prerequisites[i][0];
+
+        for (auto& preq : prerequisites) {
+            int dst = preq[0], src = preq[1];
             graph[src].push_back(dst);
             inDegrees[dst]++;
         }
         queue<int> sources;
-        for(int i = 0; i < numCourses; i++) {
+        for (int i = 0; i < numCourses; i++) {
             if (inDegrees[i] == 0) {
                 sources.push(i);
             }
         }
-        while(!sources.empty()) {
+        vector<int> ret;
+        while (!sources.empty()) {
             int curr = sources.front();
             sources.pop();
-            sortedOrder.push_back(curr);
+            ret.push_back(curr);
             for (int i = 0; i < graph[curr].size(); i++) {
-                inDegrees[graph[curr][i]]--;
-                if (inDegrees[graph[curr][i]] == 0) {
-                    sources.push(graph[curr][i]);
+                int nextNode = graph[curr][i];
+                inDegrees[nextNode]--;
+                if (inDegrees[nextNode] == 0) {
+                    sources.push(nextNode);
                 }
             }
         }
-        return (sortedOrder.size() == numCourses);
+        return ret.size() == numCourses;
     }
 };
