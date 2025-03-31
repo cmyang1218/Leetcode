@@ -15,7 +15,6 @@ public:
         for (int i = 0; i < k-1; i++) {
             maxScore += pairWeights[n-i-2];
         }
-        cout << minScore << " " << maxScore << endl;;
         return maxScore - minScore;
     }
 };
