@@ -17,19 +17,11 @@ public:
 
         TreeNode* left = LCA(root->left, p, q);
         TreeNode* right = LCA(root->right, p, q);
-        if (root == p) {
-            found_p = true;
-            return root;
-        }
-        if (root == q) {
-            found_q = true;
-            return root;
-        }
-        if (left != nullptr && right != nullptr) {
-            if (left == p) {
+        if ((root == p || root == q) || (left != nullptr && right != nullptr)) {
+            if (root == p) {
                 found_p = true;
             }
-            if (right == q) {
+            else if (root == q) {
                 found_q = true;
             }
             return root;
