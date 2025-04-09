@@ -1,41 +1,39 @@
 class Solution {
 public:
+    vector<int> parent;
+    vector<int> rank;
 
-    int unions(vector<int>& parent, vector<int>& rank, int n1, int n2) {
-        int p1 = find(parent, n1), p2 = find(parent, n2);
-        if (p1 == p2)
+    int Find(int node) {
+        if (parent[node] == -1) {
+            return node;
+        }
+        return parent[node] = Find(parent[node]);
+    }
+
+    int Union(int nodeA, int nodeB) {
+        int pA = Find(nodeA), pB = Find(nodeB);
+        if (pA == pB) {
             return 0;
-        
-        if (rank[p1] < rank[p2]) {
-            parent[p1] = p2;
-            rank[p2] += rank[p1];
         }else {
-            parent[p2] = p1;
-            rank[p1] += rank[p2];
+            if (rank[pA] >= rank[pB]) {
+                parent[pA] = pB;
+                rank[pA] += rank[pB];
+            }else {
+                parent[pB] = pA;
+                rank[pB] += rank[pA];
+            }
         }
         return 1;
     }
 
-    int find(vector<int>& parent, int n1) {
-        int res = n1;
-        while (res != parent[res]) {
-            parent[res] = parent[parent[res]];
-            res = parent[res];
-        }
-        return res;
-    }
-
     int countComponents(int n, vector<vector<int>>& edges) {
-        vector<int> parent(n);
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
+        parent.resize(n, -1);
+        rank.resize(n, 1);
+        int cnt = n;
+        for (auto& edge : edges) {
+            int nA = edge[0], nB = edge[1];
+            cnt -= Union(nA, nB);
         }
-        vector<int> rank(n, 1);
-        int ret = n;
-        for (auto edge : edges) {
-            int n1 = edge[0], n2 = edge[1];
-            ret -= unions(parent, rank, n1, n2);
-        }
-        return ret;
+        return cnt;
     }
 };
