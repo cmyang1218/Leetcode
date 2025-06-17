@@ -7,10 +7,11 @@ public:
             res += word1[idx1++];
             res += word2[idx2++];
         }
-        if (idx1 < word1.length()) {
-            res += word1.substr(idx1, word1.length()-idx1);
-        }else if (idx2 < word2.length()) {
-            res += word2.substr(idx2, word2.length()-idx2);
+        while (idx1 < word1.length()) {
+            res += word1[idx1++];
+        }
+        while (idx2 < word2.length()) {
+            res += word2[idx2++];
         }
         return res;
     }
